@@ -1,31 +1,68 @@
-# TodoApp
+# TaskPulse - 締切カウントダウン＆残り作業負荷を可視化するタスク管理アプリ
 
-React、TypeScript、Tailwind CSS を使用し、ローカルストレージでデータを永続化した「Todoアプリ」です。
+🔗 **公開URL（GitHub Pages）:** https://nishiuraumi.github.io/react-todo-app/
 
-## 開発履歴
+![アプリのメイン画面](/image/アプリのメイン画面.png)
 
-- 2026年10月16日：プロジェクト開始
+## 1. 開発の背景・コンセプト（着想）
 
-## ライセンス
+普段、複数のレポート提出やプログラミング開発、アルバイトの予定を並行してこなす中で、既存のシンプルなTodoアプリを使っていると**「タスクの件数自体は少なく見えるのに、いざ着手すると1つあたりの作業が重く、締切直前に時間が足りなくなる」**という失敗を何度も経験しました。
 
-MIT License
+この実体験から、単なる「やることリスト」ではなく、**「あと何時間で締切か（緊急度）」と「残りの全タスクを終えるのに合計何時間かかるか（作業負荷）」をひと目で把握できるタスク管理アプリ**をコンセプトに開発しました。
 
-Copyright (c) 2026 Umi Nishiura 
+---
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+## 2. 主な機能と画面紹介
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+### ① 残り作業時間の自動集計とユーザー名カスタマイズ
+![ヘッダーの作業負荷表示](docs/images/03_workload.png)
+- **残り目安時間の自動計算:** 未完了タスクに設定された「予想作業時間」をリアルタイムで合算し、画面上部に「残り目安: ◯時間◯分」として表示します。自分の空き時間と照らし合わせて、今日中に終わる量かを即座に判断できます。
+- **時間帯別の挨拶と名前編集:** 朝・昼・夜で挨拶が変化し、ユーザー名をクリックするとその場で自分の名前やニックネームに変更して保存できます。
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+### ② 期限カウントダウンと緊急度ハイライト
+![期限カウントダウン表示](docs/images/02_countdown.png)
+- 日付計算ライブラリ `dayjs` を用い、現在時刻と期限の差分から「あと◯日」「あと約◯時間」「期限切れ」を自動算出します。
+- 期限が24時間以内のタスクは**アンバー（黄色）の枠線**、期限を過ぎたタスクは**赤色の枠線**で強調表示し、優先的に着手すべきタスクを見逃さない工夫をしています。
+
+### ③ 状態・カテゴリ・キーワードによる絞り込みと並び替え
+![絞り込みと並び替え操作](docs/images/04_filter_sort.png)
+- **3軸の絞り込み:** 「すべて / 未完了 / 完了済み」の状態タブ、「課題・レポート / 開発・研究 / バイト・私用」のカテゴリ選択、さらにタスク名のインクリメンタル検索を組み合わせて目的のタスクを素早く抽出できます。
+- **柔軟な並び替え:** 「登録順」「期限が近い順（期限未設定は末尾に自動配置）」「優先度が高い順」の3パターンで即座にソートできます。
+
+### ④ 入力バリデーション付きタスク追加フォーム
+![タスク追加フォーム](docs/images/05_add_form.png)
+- タスク登録時に「カテゴリ」「予想作業時間（15分〜3時間）」「優先度（★1〜3）」「期限（日時）」を設定できます。
+- 空白のみの登録や極端に短いタスク名を防ぐため、前後の空白を除いた文字数（2〜32文字）をリアルタイムで検証し、エラー時は `aria-live` を用いて視覚的・アクセシブルにフィードバックを返します。
+
+### ⑤ レスポンシブデザイン（PC・スマートフォン両対応）
+![スマートフォンでの表示画面](docs/images/06_mobile.png)
+- 外出先でもスマートフォンから片手でタスク確認・追加ができるよう、画面幅に応じてフォームやフィルタバーのレイアウトが自動で縦積みに切り替わるレスポンシブ設計を採用しています。
+
+---
+
+## 3. 使用技術（技術スタック）
+
+| カテゴリ | 使用技術・ライブラリ | 選定理由・用途 |
+| :--- | :--- | :--- |
+| **フロントエンド** | React 19 / TypeScript | 型安全なコンポーネント設計と状態管理のため |
+| **ビルドツール** | Vite 8 | 高速な開発サーバーと最適化された本番ビルドのため |
+| **スタイリング** | Tailwind CSS v4 / tailwind-merge | ユーティリティクラスによる迅速なレスポンシブUI構築とクラス競合の防止 |
+| **日付・時間処理** | Day.js | 期限のフォーマット表示および現在時刻との残り時間（分・時間・日）計算 |
+| **アイコン** | Font Awesome | 直感的に操作が伝わるUIアイコンの表示 |
+| **データ永続化** | Web Storage API (`localStorage`) | サーバーレス環境でもブラウザを閉じた後にデータを保持するため |
+| **ホスティング** | GitHub Pages (`gh-pages`) | 静的サイトとしての公開・運用 |
+
+---
+
+## 4. 開発を通じて工夫した点・苦労した点
+
+- **派生状態（Derived State）によるバグの防止:**
+  絞り込み後のタスクリストや未完了件数、合計作業時間を別の `useState` として持つと、元の `todos` とデータの不整合が起きやすくなります。そこで、元の `todos` 配列から `filter` / `sort` / `reduce` を使ってレンダリング時に算出する設計にし、状態管理をシンプルに保ちました。
+- **Date型のシリアライズ問題への対応:**
+  `localStorage` にデータを保存する際、`Date` オブジェクトが文字列（ISO形式）に変換されてしまうため、読み込み時に `new Date()` で再復元する型安全な変換処理（`loadTodos`）を実装しました。
+- **今後の展望:**
+  今後は、完了したタスクの履歴から「見積もり時間と実際にかかった時間のズレ」を振り返れる機能や、タスクのドラッグ＆ドロップによる並び替え機能を追加したいと考えています。
+
+---
+
+開発期間: 2026.10.25 ~ 2026.11.18 (約18時間)
