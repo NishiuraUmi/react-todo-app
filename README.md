@@ -1,6 +1,6 @@
 # TaskPulse - 締切カウントダウン＆残り作業負荷を可視化するタスク管理アプリ
 
-🔗 **公開URL（GitHub Pages）:** https://[あなたのGitHubユーザー名].github.io/[リポジトリ名]/
+🔗 **公開URL（GitHub Pages）:** https://nishiuraumi.github.io/react-todo-app/
 
 ![アプリのメイン画面](docs/images/01_main.png)
 
