@@ -2,7 +2,7 @@
 
 🔗 **公開URL（GitHub Pages）:** https://nishiuraumi.github.io/react-todo-app/
 
-![アプリのメイン画面](docs/images/01_main.png)
+![アプリのメイン画面](/image/アプリのメイン画面.png)
 
 ## 1. 開発の背景・コンセプト（着想）
 
