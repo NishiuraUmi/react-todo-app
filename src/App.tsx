@@ -61,7 +61,7 @@ const App = () => {
     () => localStorage.getItem(userNameStorageKey) ?? "寝屋川タヌキ"
   );
 
-  // 新規タスク入力用 State
+  // 新規タスク入力用 
   const [newTodoName, setNewTodoName] = useState("");
   const [newTodoPriority, setNewTodoPriority] = useState(2);
   const [newTodoDeadline, setNewTodoDeadline] = useState<Date | null>(null);
@@ -69,13 +69,12 @@ const App = () => {
   const [newTodoMinutes, setNewTodoMinutes] = useState<number>(30);
   const [isNameTouched, setIsNameTouched] = useState(false);
 
-  // 絞り込み・並び替え用 State
+  // 絞り込み・並び替え用 
   const [filterStatus, setFilterStatus] = useState<FilterStatus>("ALL");
   const [filterCategory, setFilterCategory] = useState<Category | "ALL">("ALL");
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState<SortOption>("CREATED");
 
-  // 集計値（派生状態）
+  const [sortBy, setSortBy] = useState<SortOption>("CREATED");
   const uncompletedTodos = todos.filter((todo) => !todo.isDone);
   const uncompletedCount = uncompletedTodos.length;
   const completedCount = todos.length - uncompletedCount;
@@ -95,8 +94,7 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem(userNameStorageKey, userName);
   }, [userName]);
-
-  // 表示用タスクリストのフィルタリングとソート
+  
   const filteredAndSortedTodos = todos
     .filter((todo) => {
       if (filterStatus === "ACTIVE" && todo.isDone) return false;

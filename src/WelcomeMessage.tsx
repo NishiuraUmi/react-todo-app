@@ -26,7 +26,6 @@ const WelcomeMessage = ({
         ? "こんにちは"
         : "こんばんは";
 
-  // 分を「◯時間◯分」形式に変換するヘルパー
   const formatMinutes = (mins: number): string => {
     if (mins === 0) return "0分";
     const hours = Math.floor(mins / 60);
