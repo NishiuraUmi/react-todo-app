@@ -1,4 +1,4 @@
-aimport type { Todo, Category } from "./types";
+import type { Todo, Category } from "./types";
 import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
